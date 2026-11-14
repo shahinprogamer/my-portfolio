@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>Shahin Hosen | Web Developer</title>
+  <meta name="description"
+    content="Shahin Hosen builds clean, fast and fully responsive websites with HTML, CSS and JavaScript. Light back-end work like contact forms and simple APIs.">
+  <meta name="theme-color" content="#07070d">
+  <meta property="og:title" content="Shahin Hosen | Web Developer">
+  <meta property="og:description" content="Clean, fast and fully responsive websites with HTML, CSS and JavaScript.">
+  <meta property="og:type" content="website">
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff3d8f'/%3E%3Cstop offset='1' stop-color='%2300d1ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%2307070d'/%3E%3Ctext x='32' y='43' font-size='32' font-family='Arial' font-weight='800' text-anchor='middle' fill='url(%23g)'%3ES%3C/text%3E%3C/svg%3E">
+  <noscript>
+    <style>
+      [data-reveal],
+      .sp-c {
+        opacity: 1 !important;
+        transform: none !important;
+        clip-path: none !important
+      }
+
+      [data-reveal="clip"]>.photo {
+        clip-path: none !important
+      }
+
+      #loader {
+        display: none !important
+      }
+
+      .ring .v {
+        stroke-dashoffset: 0 !important
+      }
+    </style>
+  </noscript>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!--
+=====================================================================
+  সংক্ষেপে কোথায় কী বসাবেন (বাংলা গাইড)
+  ---------------------------------------------------------------
+  1) আপনার ছবি      -> নিচে "ABOUT" অংশের  data-photo=""  এ ছবির পথ বসান
+  2) ৬টি প্রজেক্ট   -> নিচে "PROJECTS" অংশে প্রতিটি কার্ডের  href=""  এ লিংক বসান
+  3) প্রজেক্টের ছবি  -> প্রতিটি কার্ডের  data-shot=""  এ ছবির পথ বসান (ঐচ্ছিক)
+  4) ফর্ম          -> "CONTACT" অংশে Formspree লিংক আগের মতোই আছে
+  শুধু এই কয়টি জায়গা বদলালেই হবে, বাকি কিছু ছোঁয়ার দরকার নেই।
+=====================================================================
+-->
+
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- SVG gradients used by the skill rings -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="rg1" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ff3d8f" />
+        <stop offset="1" stop-color="#ffb020" />
+      </linearGradient>
+      <linearGradient id="rg2" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#7b5cff" />
+        <stop offset="1" stop-color="#ff3d8f" />
+      </linearGradient>
+      <linearGradient id="rg3" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#00d1ff" />
+        <stop offset="1" stop-color="#7b5cff" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Loader -->
+  <div id="loader" aria-hidden="true">
+    <div class="ld-inner">
+      <span class="ld-name">Shahin<i>.dev</i></span>
+      <span class="ld-num" id="ldNum">0</span>
+      <span class="ld-bar"><b id="ldBar"></b></span>
+    </div>
+  </div>
+
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="veil" aria-hidden="true"></div>
+  <div class="spot" aria-hidden="true"></div>
+  <div id="progress" aria-hidden="true"></div>
+  <div class="cur-dot" aria-hidden="true"></div>
+  <div class="cur-ring" aria-hidden="true"><span></span></div>
+
+  <header>
+    <div class="nav">
+      <a href="#home" class="logo" data-cursor>Shahin<span>.dev</span></a>
+      <nav class="links" id="links">
+        <i class="ind" id="ind"></i>
+        <a href="#home">Home</a><a href="#about">About</a><a href="#skills">Skills</a>
+        <a href="#services">Services</a><a href="#projects">Projects</a><a href="#faq">FAQ</a><a
+          href="#contact">Contact</a>
+      </nav>
+      <a href="#contact" class="nav-cta" data-cursor>Hire Me</a>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============================ HERO ============================ -->
+    <section class="hero" id="home">
+      <canvas id="fx" aria-hidden="true"></canvas>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <span class="pill" data-reveal><span class="pulse"></span> Available for new projects</span>
+          <h1 id="title" aria-label="Hi, I'm Shahin — I build clean, fast websites that work.">Hi, I'm Shahin — I build
+            <em>clean, fast</em> websites that work.</h1>
+          <p class="role" data-reveal style="--d:.15s">I'm a <b id="role"></b><span class="caret"></span></p>
+          <p class="lede" data-reveal style="--d:.25s">I build fully responsive websites with HTML, CSS and JavaScript,
+            and I also handle light back-end work like contact forms and simple APIs. Clean code, clear communication
+            and on-time delivery — every time.</p>
+          <div class="cta" data-reveal style="--d:.35s">
+            <a href="#projects" class="btn btn-p mag" data-cursor><span>View My Projects</span><svg viewBox="0 0 24 24"
+                aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg></a>
+            <a href="#contact" class="btn mag" data-cursor><span>Hire Me</span></a>
+          </div>
+          <div class="social" data-reveal style="--d:.45s">
+            <a href="https://github.com/shahinprogamer" target="_blank" rel="noopener" data-cursor aria-label="GitHub">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.76.4-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z" />
+              </svg>GitHub
+            </a>
+            <a href="https://www.fiverr.com/shahinbdlove" target="_blank" rel="noopener" data-cursor
+              aria-label="Fiverr">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M23 8.25h-3.75V6.6c0-.77.62-1.35 1.38-1.35h1.62V2.1h-2.14C17.64 2.1 16 3.75 16 6.3v1.95h-3.5V6.6c0-.77.62-1.35 1.38-1.35h1.12V2.1h-1.64C10.88 2.1 9.25 3.75 9.25 6.3v1.95H6.5V5.1H1v3.15h2.25v13.65h3.25V8.25H9.25v13.65h3.25V8.25H16v13.65h3.25V8.25H23z" />
+              </svg>Fiverr
+            </a>
+            <a href="mailto:mhlovebd548@gmail.com" data-cursor aria-label="Email">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
+              </svg>Email
+            </a>
+          </div>
+        </div>
+
+        <!-- 3D layered code card (follows the mouse) -->
+        <div class="stage" id="stage" aria-hidden="true">
+          <div class="orbit">
+            <span style="--od:0s;--oc:var(--c1)">HTML5</span>
+            <span style="--od:-6.6s;--oc:var(--c3)">CSS3</span>
+            <span style="--od:-13.3s;--oc:var(--c2)">JavaScript</span>
+          </div>
+          <div class="layer l-back"></div>
+          <div class="layer l-mid"></div>
+          <div class="layer l-front">
+            <div class="bar"><i></i><i></i><i></i><span class="fname" id="fname">portfolio.js</span><span class="live" id="live"><i></i><em>typing</em></span></div>
+            <!-- হিরোর লাইভ কোডিং: কোড নমুনাগুলো script.js এর শেষে CODE_DEMOS তালিকায় আছে -->
+            <pre class="code" id="code"><span class="c">// portfolio.js</span>
+<span class="k">const</span> <span class="f">shahin</span> = {
+  role: <span class="s">"Web Developer"</span>,
+  stack: [<span class="s">"HTML"</span>, <span class="s">"CSS"</span>, <span class="s">"JS"</span>],
+  responsive: <span class="n">true</span>
+};
+<span class="f">build</span>(<span class="s">"your next website"</span>);</pre>
+            <div class="out"><div class="out-h"><span>Output</span><b id="runpill">▶ Run</b></div><div class="out-b" id="outb"></div></div>
+            <div class="dots5" id="dots5"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="chip3d"><b>100%</b><small>Mobile-first</small></div>
+        </div>
+      </div>
+      <a href="#about" class="scroll" aria-label="Scroll down"><i></i></a>
+    </section>
+
+    <!-- ============================ MARQUEE ============================ -->
+    <div class="marq" aria-label="Technologies">
+      <div class="row" id="row1"></div>
+      <div class="row alt" id="row2"></div>
+    </div>
+
+    <!-- ============================ ABOUT ============================ -->
+    <section id="about">
+      <div class="wrap about-grid">
+        <!--
+      আপনার ছবি: data-photo="" এর ভেতরে ছবির ফাইলের নাম লিখুন, যেমন data-photo="Photo.jpg"
+      ফাঁকা রাখলে এখানে একটি সুন্দর খালি ফ্রেম দেখাবে।
+    -->
+        <div class="photo-wrap" data-reveal="clip">
+          <div class="photo" id="photo" data-photo="shahin1.png" data-tilt>
+            <div class="ph-empty">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="8.5" r="3.6" />
+                <path d="M4.5 20c.9-3.6 3.9-5.6 7.5-5.6s6.6 2 7.5 5.6" />
+              </svg>
+              <span>Your photo here</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-copy">
+          <span class="eyebrow" data-reveal>About me</span>
+          <h2 data-split>Hi, I'm Shahin — your web developer</h2>
+          <p class="wr" data-reveal>I build clean, fast and fully responsive websites with HTML, CSS and JavaScript.
+            Whether you need a brand-new site or a redesign of an existing one, I focus on making it look modern and
+            work perfectly on every device.</p>
+          <p class="wr" data-reveal>Beyond the front end, I also do light back-end work like contact forms and simple
+            APIs, so your site can actually receive messages and connect to data. You get clean code, clear
+            communication and on-time delivery — and I'll work with you to bring your idea to life.</p>
+          <p class="strong" data-reveal>Message me with your idea, and let's build it together.</p>
+          <div class="counters" data-reveal>
+            <div class="count"><b data-n="6">0</b><span>Demo projects</span></div>
+            <div class="count"><b data-n="4">0</b><span>Service areas</span></div>
+            <div class="count"><b data-n="100" data-s="%">0</b><span>Responsive</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SKILLS ============================ -->
+    <section id="skills">
+      <div class="wrap split">
+        <div class="side">
+          <div class="head"><span class="eyebrow" data-reveal>Skills</span>
+            <h2 data-split>Tools I use every day</h2>
+            <p class="lead" data-reveal>Strong front-end foundation with light back-end experience.</p>
+          </div>
+          <div class="chips" data-reveal>
+            <span>Landing Pages</span><span>Website Redesign</span><span>REST
+              API</span><span>jQuery</span><span>Animations</span><span>Cross-browser</span><span>Performance</span>
+          </div>
+        </div>
+        <div class="skills-right">
+          <div>
+            <h3 class="group" data-reveal>Front-end</h3>
+            <div class="rings">
+              <div class="ring" data-v="90" data-reveal><svg viewBox="0 0 100 100" aria-hidden="true">
+                  <circle class="t" cx="50" cy="50" r="42" />
+                  <circle class="v" cx="50" cy="50" r="42" />
+                </svg><b>0%</b><span>HTML5</span></div>
+              <div class="ring" data-v="88" data-reveal style="--d:0.08s"><svg viewBox="0 0 100 100" aria-hidden="true">
+                  <circle class="t" cx="50" cy="50" r="42" />
+                  <circle class="v" cx="50" cy="50" r="42" />
+                </svg><b>0%</b><span>CSS3, Flexbox and Grid</span></div>
+              <div class="ring" data-v="80" data-reveal style="--d:0.16s"><svg viewBox="0 0 100 100" aria-hidden="true">
+                  <circle class="t" cx="50" cy="50" r="42" />
+                  <circle class="v" cx="50" cy="50" r="42" />
+                </svg><b>0%</b><span>JavaScript</span></div>
+              <div class="ring" data-v="90" data-reveal style="--d:0.24s"><svg viewBox="0 0 100 100" aria-hidden="true">
+                  <circle class="t" cx="50" cy="50" r="42" />
+                  <circle class="v" cx="50" cy="50" r="42" />
+                </svg><b>0%</b><span>Responsive Design</span></div>
+            </div>
+          </div>
+          <div>
+            <h3 class="group" data-reveal>Back-end and tools</h3>
+            <div class="rings">
+              <div class="ring" data-v="60" data-reveal><svg viewBox="0 0 100 100" aria-hidden="true">
+                  <circle class="t" cx="50" cy="50" r="42" />
+                  <circle class="v" cx="50" cy="50" r="42" />
+                </svg><b>0%</b><span>Node.js and Express (light)</span></div>
+              <div class="ring" data-v="55" data-reveal style="--d:0.08s"><svg viewBox="0 0 100 100" aria-hidden="true">
+                  <circle class="t" cx="50" cy="50" r="42" />
+                  <circle class="v" cx="50" cy="50" r="42" />
+                </svg><b>0%</b><span>PHP and MySQL (light)</span></div>
+              <div class="ring" data-v="75" data-reveal style="--d:0.16s"><svg viewBox="0 0 100 100" aria-hidden="true">
+                  <circle class="t" cx="50" cy="50" r="42" />
+                  <circle class="v" cx="50" cy="50" r="42" />
+                </svg><b>0%</b><span>Git and GitHub</span></div>
+              <div class="ring" data-v="75" data-reveal style="--d:0.24s"><svg viewBox="0 0 100 100" aria-hidden="true">
+                  <circle class="t" cx="50" cy="50" r="42" />
+                  <circle class="v" cx="50" cy="50" r="42" />
+                </svg><b>0%</b><span>Bootstrap and Tailwind CSS</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SERVICES ============================ -->
+    <section id="services">
+      <div class="wrap split">
+        <div class="side">
+          <div class="head"><span class="eyebrow" data-reveal>Services</span>
+            <h2 data-split>What I can do for you</h2>
+            <p class="lead" data-reveal>From a single page to a full website, built to look great and work properly.</p>
+          </div>
+        </div>
+        <div class="stack" id="stack">
+          <article class="svc" style="--i:0"><span class="no">01</span>
+            <div>
+              <h3>Custom Website Development</h3>
+              <p>New websites and landing pages built from scratch with clean, well-organized code.</p>
+            </div>
+          </article>
+          <article class="svc" style="--i:1"><span class="no">02</span>
+            <div>
+              <h3>Website Redesign &amp; Customization</h3>
+              <p>Turn an outdated site into a modern one with better typography, spacing and usability.</p>
+            </div>
+          </article>
+          <article class="svc" style="--i:2"><span class="no">03</span>
+            <div>
+              <h3>Mobile Responsive Layout</h3>
+              <p>Mobile-first design that looks right on phones, tablets and desktops.</p>
+            </div>
+          </article>
+          <article class="svc" style="--i:3"><span class="no">04</span>
+            <div>
+              <h3>Interactive Features</h3>
+              <p>Menus, sliders, filters, validation and animations using vanilla JavaScript.</p>
+            </div>
+          </article>
+          <article class="svc" style="--i:4"><span class="no">05</span>
+            <div>
+              <h3>Contact Forms &amp; Light Back-end</h3>
+              <p>Contact forms, simple APIs and database connections with Node.js or PHP.</p>
+            </div>
+          </article>
+          <article class="svc" style="--i:5"><span class="no">06</span>
+            <div>
+              <h3>Bug Fixes &amp; Improvements</h3>
+              <p>Broken layouts, mobile issues and small improvements to your existing site.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ PROJECTS ============================
+  এখানে আপনার ৬টি ডেমো প্রজেক্ট।
+
+  কীভাবে লিংক বসাবেন (প্রতিটি কার্ডে):
+    href=""        ->  আপনার ডেমো সাইটের লিংক বসান, যেমন href="https://example.com/landing"
+                       লিংক বসালেই কার্ডে ক্লিক করলে নতুন ট্যাবে খুলবে (target="_blank" দেওয়া আছে)
+    data-shot=""   ->  কার্ডের ছবির পথ বসান, যেমন data-shot="shots/landing.jpg"  (না দিলেও চলবে)
+  লিংক ফাঁকা থাকলে কার্ডে "Add your link" লেখা দেখাবে এবং ক্লিক করলে কিছু হবে না।
+
+    ছবি বসানোর নিয়ম (খুব সহজ):
+    প্রতিটি কার্ডে data-shots="" এর ভেতরে ৪টি ছবির নাম কমা (,) দিয়ে লেখা আছে।
+    এখন সেখানে ডেমো ছবি বসানো আছে (images ফোল্ডারে)। আপনার আসল ছবির নাম দিলেই বদলে যাবে।
+    যেমন: data-shots="images/a.jpg,images/b.jpg,images/c.jpg,images/d.jpg"
+    ১টি ছবি দিলেও চলবে (তখন স্লাইড হবে না)। ৪টি দিলে কার্ডে মাউস নিলে ছবি একে একে বদলাবে,
+    মোবাইলে নিজে নিজেই বদলাবে। ছবির সাইজ ১২৮০×৭৬৯ হলে সবচেয়ে ভালো দেখাবে।
+  কার্ডের লেখা (নাম/বর্ণনা) আপনার আগের সাইট থেকেই নেওয়া। চাইলে বদলাতে পারেন।
+============================================================================ -->
+    <section id="projects">
+      <div class="wrap">
+        <div class="head-row">
+          <div class="head"><span class="eyebrow" data-reveal>Portfolio</span>
+            <h2 data-split>Selected work</h2>
+          </div>
+          <p class="lead" data-reveal>Self-initiated demo projects that show my skills and coding style. Click any card
+            to open the live demo.</p>
+        </div>
+        <div class="projects">
+
+          <!-- প্রজেক্ট ১ -->
+          <a class="proj" href="https://shahinprogamer.github.io/Modern-Business-Landing-Page/" target="_blank" rel="noopener" data-shots="project1-image1.jpg,iproject1-image2.jpg,project1-image3.jpg,project1-image4.jpg" data-tilt
+            data-cursor="Open" style="--g1:#ff5d8f;--g2:#8b5cf6">
+            <div class="shot"><span class="idx">01</span></div>
+            <div class="pb">
+              <h3>Modern Business Landing Page</h3>
+              <p>A conversion-focused landing page with hero, services, testimonial layout and a validated contact form.
+              </p>
+              <div class="tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
+              <div class="go"><span class="od">Open demo</span><i>↗</i></div>
+            </div>
+          </a>
+
+          <!-- প্রজেক্ট ২ -->
+          <a class="proj" href="https://shahinprogamer.github.io/Responsive-Restaurant-Website/" target="_blank" rel="noopener" data-shots="project2-image1.jpg,project2-image2.jpg,project2-image3.jpg,project2-image4.jpg" data-tilt data-cursor="Open"
+            style="--g1:#fb923c;--g2:#ef4444">
+            <div class="shot"><span class="idx">02</span></div>
+            <div class="pb">
+              <h3>Responsive Restaurant Website</h3>
+              <p>A restaurant website with a filterable menu, photo gallery and table reservation form.</p>
+              <div class="tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
+              <div class="go"><span class="od">Open demo</span><i>↗</i></div>
+            </div>
+          </a>
+
+          <!-- প্রজেক্ট ৩ -->
+          <a class="proj" href="https://shahinprogamer.github.io/E-commerce-Store-Frontend/" target="_blank" rel="noopener" data-shots="project3-image1.jpg,project3-image2.jpg,project3-image3.jpg,project3-image4.jpg" data-tilt data-cursor="Open"
+            style="--g1:#34d399;--g2:#0ea5e9">
+            <div class="shot"><span class="idx">03</span></div>
+            <div class="pb">
+              <h3>E-commerce Store Frontend</h3>
+              <p>A product listing with category filter, search and a shopping cart saved in LocalStorage.</p>
+              <div class="tags"><span>JavaScript</span><span>LocalStorage</span><span>CSS3</span></div>
+              <div class="go"><span class="od">Open demo</span><i>↗</i></div>
+            </div>
+          </a>
+
+          <!-- প্রজেক্ট ৪ -->
+          <a class="proj" href="https://shahinprogamer.github.io/Website-Redesign-Before-After/" target="_blank" rel="noopener" data-shots="project4-image1.jpg,project4-image2.jpg,project4-image3.jpg,project4-image4.jpg" data-tilt data-cursor="Open"
+            style="--g1:#38bdf8;--g2:#6366f1">
+            <div class="shot"><span class="idx">04</span></div>
+            <div class="pb">
+              <h3>Website Redesign: Before and After</h3>
+              <p>An outdated layout redesigned with better typography, spacing, colors and a mobile-first approach.</p>
+              <div class="tags"><span>HTML5</span><span>CSS3</span><span>Redesign</span></div>
+              <div class="go"><span class="od">Open demo</span><i>↗</i></div>
+            </div>
+          </a>
+
+          <!-- প্রজেক্ট ৫ -->
+          <a class="proj" href="https://shahinprogamer.github.io/Contact-Form-with-Backend/" target="_blank" rel="noopener" data-shots="project5-image1.jpg,project5-image2.jpg,project5-image3.jpg,project5-image4.jpg" data-tilt data-cursor="Open"
+            style="--g1:#a78bfa;--g2:#ec4899">
+            <div class="shot"><span class="idx">05</span></div>
+            <div class="pb">
+              <h3>Contact Form with Backend</h3>
+              <p>A contact form with validation in the browser and on the server, saving every submission. Includes a
+                dependency-free Node.js server, and also runs in browser demo mode.</p>
+              <div class="tags"><span>Node.js</span><span>JavaScript</span><span>REST API</span></div>
+              <div class="go"><span class="od">Open demo</span><i>↗</i></div>
+            </div>
+          </a>
+
+          <!-- প্রজেক্ট ৬ -->
+          <a class="proj" href="https://shahinprogamer.github.io/Portfolio-Template/" target="_blank" rel="noopener" data-shots="project6-image1.jpg,project6-image2.jpg,project6-image3.jpg,project6-image4.jpg" data-tilt data-cursor="Open"
+            style="--g1:#64748b;--g2:#22d3ee">
+            <div class="shot"><span class="idx">06</span></div>
+            <div class="pb">
+              <h3>Portfolio Template</h3>
+              <p>A personal portfolio template with dark and light mode, scroll animations, an animated marquee and a
+                project showcase.</p>
+              <div class="tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
+              <div class="go"><span class="od">Open demo</span><i>↗</i></div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ PROCESS ============================ -->
+    <section id="process">
+      <div class="wrap">
+        <div class="head center"><span class="eyebrow" data-reveal>Process</span>
+          <h2 data-split>Simple, clear workflow</h2>
+        </div>
+        <div class="steps" id="tl">
+          <i class="line"><b></b><s></s></i>
+          <div class="step"><span class="dot">01</span>
+            <div class="card" data-reveal style="--d:0.0s">
+              <h3>Discuss</h3>
+              <p>You share your idea, goals and references.</p>
+            </div>
+          </div>
+          <div class="step"><span class="dot">02</span>
+            <div class="card" data-reveal style="--d:0.1s">
+              <h3>Design</h3>
+              <p>I plan the layout, colors and structure.</p>
+            </div>
+          </div>
+          <div class="step"><span class="dot">03</span>
+            <div class="card" data-reveal style="--d:0.2s">
+              <h3>Build</h3>
+              <p>Clean, responsive code with smooth interactions.</p>
+            </div>
+          </div>
+          <div class="step"><span class="dot">04</span>
+            <div class="card" data-reveal style="--d:0.3s">
+              <h3>Deliver</h3>
+              <p>Tested, revised and delivered on time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ FAQ ============================ -->
+    <section id="faq">
+      <div class="wrap split">
+        <div class="side">
+          <div class="head"><span class="eyebrow" data-reveal>FAQ</span>
+            <h2 data-split>Common questions</h2>
+          </div>
+        </div>
+        <div class="faq">
+          <div class="q" data-reveal><button aria-expanded="false">Will my website work on mobile?</button>
+            <div class="a">
+              <div>
+                <p>Yes. Every website I build is responsive and tested on mobile, tablet and desktop screens.</p>
+              </div>
+            </div>
+          </div>
+          <div class="q" data-reveal><button aria-expanded="false">Do I get the source code?</button>
+            <div class="a">
+              <div>
+                <p>Yes, you receive the complete source code when the project is delivered.</p>
+              </div>
+            </div>
+          </div>
+          <div class="q" data-reveal><button aria-expanded="false">Can you redesign my existing website?</button>
+            <div class="a">
+              <div>
+                <p>Yes. Send me the link or files and I will improve the design while keeping your content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="q" data-reveal><button aria-expanded="false">Do you do back-end work?</button>
+            <div class="a">
+              <div>
+                <p>I do light back-end work such as contact forms, simple APIs and database connections with Node.js or
+                  PHP.</p>
+              </div>
+            </div>
+          </div>
+          <div class="q" data-reveal><button aria-expanded="false">How many revisions do I get?</button>
+            <div class="a">
+              <div>
+                <p>Revisions are agreed before we start, so you always know what to expect.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ CONTACT ============================
+  ফর্মের action এ আপনার Formspree লিংক আগের মতোই বসানো আছে।
+  বদলাতে চাইলে শুধু action="..." এর লিংকটি বদলান।
+============================================================================ -->
+    <section id="contact">
+      <div class="wrap split">
+        <div class="side">
+          <div class="head"><span class="eyebrow" data-reveal>Contact</span>
+            <h2 data-split>Let's build something great</h2>
+            <p class="lead" data-reveal>Tell me about your project. I'll reply as soon as I can.</p>
+          </div>
+          <div class="cinfo" data-reveal>
+            <h3>Get in touch</h3>
+            <a class="it" href="mailto:mhlovebd548@gmail.com"
+              data-cursor><small>Email</small><span>mhlovebd548@gmail.com</span></a>
+            <a class="it" href="https://www.fiverr.com/shahinbdlove" target="_blank" rel="noopener"
+              data-cursor><small>Fiverr</small><span>@shahinbdlove</span></a>
+            <a class="it" href="https://github.com/shahinprogamer" target="_blank" rel="noopener"
+              data-cursor><small>GitHub</small><span>github.com/shahinprogamer</span></a>
+            <div class="it"><small>Location</small><span>Bangladesh</span></div>
+          </div>
+        </div>
+        <form class="cform" id="form" novalidate data-reveal style="--d:.1s" action="https://formspree.io/f/xppqdvrz"
+          method="POST">
+          <div class="fld"><input id="fn" name="name" placeholder=" " required autocomplete="name"><label for="fn">Your
+              name</label></div>
+          <div class="fld"><input id="fe" type="email" name="email" placeholder=" " required autocomplete="email"><label
+              for="fe">Your email</label></div>
+          <div class="fld"><textarea id="fm" name="message" placeholder=" " required></textarea><label for="fm">Tell me
+              about your project</label></div>
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+          <button class="btn btn-p mag" type="submit" data-cursor><span>Send message</span><svg viewBox="0 0 24 24"
+              aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg></button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div class="f-brand"><a href="#home" class="logo" data-cursor>Shahin<span>.dev</span></a>
+        <p>Web Developer</p>
+      </div>
+      <nav class="f-links" aria-label="Footer">
+        <a href="#home">Home</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#services">Services</a><a
+          href="#projects">Projects</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+      </nav>
+      <div class="f-social">
+        <a href="https://github.com/shahinprogamer" target="_blank" rel="noopener" data-cursor>GitHub</a>
+        <a href="https://www.fiverr.com/shahinbdlove" target="_blank" rel="noopener" data-cursor>Fiverr</a>
+        <a href="mailto:mhlovebd548@gmail.com" data-cursor>Email</a>
+      </div>
+    </div>
+    <div class="wrap f-bottom">© <span id="yr"></span> Shahin Hosen · Designed and built with HTML, CSS and JavaScript
+      <a href="#home" class="totop" data-cursor>Back to top ↑</a></div>
+  </footer>
+
+  <div id="toast" role="status"></div>
+  <script src="script.js" defer></script>
+</body>
+
+</html>
