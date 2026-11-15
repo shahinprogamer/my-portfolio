@@ -274,7 +274,7 @@ if (reduce) $$('.ring').forEach(r => { $('.v', r).style.strokeDashoffset = 264 *
   const r1 = $('#row1'), r2 = $('#row2');
   r1.innerHTML = html; r2.innerHTML = [...TECH].reverse().concat([...TECH].reverse()).map(t => `<span>${t}</span>`).join('');
   if (reduce) return;
-  let x1 = 0, x2 = 0, h1 = 0, h2 = 0, on = true;
+  let x1 = 0, x2 = 0, h1 = 0, h2 = 0, on = true, sk = 0;
   const meas = () => { h1 = r1.scrollWidth / 2; h2 = r2.scrollWidth / 2; };
   meas(); addEventListener('resize', meas); addEventListener('load', meas); document.fonts && document.fonts.ready.then(meas);
   new IntersectionObserver(es => on = es[0].isIntersecting).observe($('.marq'));
@@ -287,8 +287,9 @@ if (reduce) $$('.ring').forEach(r => { $('.v', r).style.strokeDashoffset = 264 *
     x2 += .7 + Math.abs(boost);
     if (x1 <= -half1) x1 += half1;
     if (x2 >= 0) x2 -= half2;
-    r1.style.transform = `translate3d(${x1}px,0,0)`;
-    r2.style.transform = `translate3d(${x2}px,0,0)`;
+    sk = lerp(sk, clamp(state.vel * -.22, -9, 9), .12);
+    r1.style.transform = `translate3d(${x1}px,0,0) skewX(${sk.toFixed(2)}deg)`;
+    r2.style.transform = `translate3d(${x2}px,0,0) skewX(${sk.toFixed(2)}deg)`;
   })();
 })();
 
@@ -339,6 +340,7 @@ function navUpdate() {
     current = cur;
     anchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
     moveInd(anchors.find(a => a.classList.contains('active')));
+    if (window.__side) window.__side(cur);
   }
 }
 anchors.forEach(a => {
@@ -411,7 +413,7 @@ addEventListener('resize', markDirty); addEventListener('load', () => { markDirt
   lastSY = sy; dirty = false;
   if (!nativeProg) prog.style.transform = `scaleX(${sy / Math.max(1, document.documentElement.scrollHeight - innerHeight)})`;
   const s = sy > 24; if (s !== scrolled) { scrolled = s; document.body.classList.toggle('scrolled', s); }
-  stackUpdate(); tlUpdate(); navUpdate(); heroParallax(); wordReveal(); projParallax();
+  stackUpdate(); tlUpdate(); navUpdate(); heroParallax(); wordReveal(); projParallax(); if (window.__fx) window.__fx();
 })();
 
 /* ---------- 6b. Glowing hero particles (additive canvas) ---------- */
@@ -722,4 +724,86 @@ toggle.<span class="f">onclick</span> = () =&gt; {
     })();
   }
   later(() => play(0), 1800);
+})();
+
+
+/* =====================================================================
+   v5 motion layer
+   ===================================================================== */
+(function v5() {
+  /* A. section numbers + side index ------------------------------------ */
+  const order = ['about', 'skills', 'services', 'projects', 'process', 'faq', 'contact'];
+  const names = { home: 'Home', about: 'About', skills: 'Skills', services: 'Services', projects: 'Projects', process: 'Process', faq: 'FAQ', contact: 'Contact' };
+  order.forEach((id, i) => { const sec = document.getElementById(id); if (sec) sec.dataset.num = String(i + 1).padStart(2, '0'); });
+  const side = document.createElement('nav'); side.className = 'sidenav'; side.setAttribute('aria-label', 'Sections');
+  ['home', ...order].forEach(id => { const a = document.createElement('a'); a.href = '#' + id; a.dataset.cursor = ''; a.innerHTML = `<b>${names[id]}</b><i></i>`; a.setAttribute('aria-label', names[id]); side.appendChild(a); });
+  document.body.appendChild(side);
+  const sideLinks = [...side.children];
+  window.__side = (cur) => sideLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
+  window.__side('home');
+
+  /* B. button text roll ------------------------------------------------- */
+  $$('.btn:not(.ripple) > span:first-child, .nav-cta').forEach(el => {
+    if (el.classList.contains('ripple') || el.dataset.rolled) return;
+    const t = el.textContent.trim(); if (!t || el.children.length) return;
+    el.dataset.rolled = '1';
+    el.innerHTML = `<span class="roll" aria-hidden="true"><i>${t}</i><i>${t}</i></span><span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">${t}</span>`;
+  });
+
+  /* C. pointer spotlight inside cards ----------------------------------- */
+  if (fine && !reduce) {
+    document.addEventListener('pointermove', e => {
+      const c = e.target.closest && e.target.closest('.count, .ring, .step .card, .q, .cinfo');
+      if (!c) return;
+      const r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+  }
+
+  /* D. service icons that draw themselves -------------------------------- */
+  const ICONS = [
+    '<path pathLength="1" d="M22 22 8 35l14 13"/><path pathLength="1" d="M48 22l14 13-14 13"/><path pathLength="1" d="M41 14 29 56"/>',
+    '<rect pathLength="1" x="8" y="12" width="54" height="40" rx="6"/><path pathLength="1" d="M8 24h54"/><path pathLength="1" d="M22 24v28"/>',
+    '<rect pathLength="1" x="22" y="6" width="26" height="52" rx="6"/><path pathLength="1" d="M31 50h8"/><path pathLength="1" d="M56 20c4 4 4 20 0 24M14 20c-4 4-4 20 0 24"/>',
+    '<path pathLength="1" d="M26 10v46l11-11 8 17 7-3-8-17h16z"/><path pathLength="1" d="M10 14l5 5M10 28h7M14 42l5-5"/>',
+    '<rect pathLength="1" x="10" y="8" width="50" height="16" rx="4"/><rect pathLength="1" x="10" y="30" width="50" height="16" rx="4"/><path pathLength="1" d="M20 16h.01M20 38h.01M30 16h20M30 38h20M35 46v12M20 58h30"/>',
+    '<path pathLength="1" d="M48 10a14 14 0 0 0-12 20L10 56l6 6 26-26a14 14 0 0 0 20-12l-9 9-8-3-3-8z"/>'
+  ];
+  $$('.svc').forEach((c, i) => {
+    const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    s.setAttribute('viewBox', '0 0 70 70'); s.setAttribute('class', 'ico'); s.setAttribute('aria-hidden', 'true');
+    s.innerHTML = ICONS[i % ICONS.length]; c.appendChild(s);
+  });
+  const svcIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('drawn'); svcIO.unobserve(e.target); } }), { threshold: .35 });
+  $$('.svc').forEach(c => reduce ? c.classList.add('drawn') : svcIO.observe(c));
+
+  /* E. project cards: staggered entrance ---------------------------------- */
+  if (!reduce) {
+    const pcs = $$('.proj');
+    pcs.forEach((c, i) => { c.classList.add('rv'); c.style.setProperty('--rd', ((i % 2) * .12) + 's'); });
+    const pio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); pio.unobserve(e.target); } }), { threshold: .12, rootMargin: '0px 0px -5% 0px' });
+    pcs.forEach(c => pio.observe(c));
+    setTimeout(() => pcs.forEach(c => c.classList.add('in')), 9000); // safety net
+  }
+
+  /* F. scroll-linked effects (called from the master loop) ---------------- */
+  const secs2 = $$('section[data-num]'), badge = $('.badge'), wm = $('#wordmark'), foot = $('footer');
+  window.__fx = () => {
+    if (reduce) return;
+    secs2.forEach(s => {
+      const r = s.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+      const k = clamp((innerHeight - r.top) / (innerHeight + r.height), 0, 1);
+      s.style.setProperty('--sp', (k - .5).toFixed(3));
+      s.style.setProperty('--sa', clamp(Math.abs(k - .5) * 1.6 - .2, 0, 1).toFixed(2));
+    });
+    if (badge) { const r = badge.getBoundingClientRect(); badge.style.setProperty('--by', (((r.top + r.height / 2) - innerHeight / 2) * -.12).toFixed(1) + 'px'); }
+    if (wm) { const r = wm.getBoundingClientRect(); wm.style.setProperty('--wp', clamp((innerHeight - r.top) / Math.max(120, r.height * .85), 0, 1).toFixed(3)); }
+  };
+  if (reduce && wm) wm.style.setProperty('--wp', 1);
+
+  /* G. magnetic pull on nav links + side dots ------------------------------ */
+  if (fine && !reduce) $$('.sidenav a, .logo').forEach(b => {
+    b.addEventListener('pointermove', e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .25}px,${(e.clientY - r.top - r.height / 2) * .25}px)`; });
+    b.addEventListener('pointerleave', () => b.style.transform = '');
+  });
 })();
